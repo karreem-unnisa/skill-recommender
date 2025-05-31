@@ -1,0 +1,8 @@
+﻿venv/
+__pycache__/
+*.pyc
+.env
+*.xlsx
+*.json
+node_modules/
+build/
