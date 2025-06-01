@@ -32,7 +32,7 @@ const Home = () => {
 
     try {
       if (mode === 'recommend') {
-        const res = await axios.post('http://localhost:5000/recommend', { skills: skillArray });
+        const res = await axios.post(`${BASE_URL}/api/recommend`, { skills: skillArray });
         const allResults = res.data.recommendations || [];
         if (allResults.length === 0) {
           setNoMatch(true);
@@ -40,7 +40,7 @@ const Home = () => {
           setResults(getRandomSubset(allResults, numberOfRecs));
         }
       } else if (mode === 'learn') {
-        const res = await axios.post('http://localhost:5000/learn', {
+        const res = await axios.post(`${BASE_URL}/api/learn`, {
           skills: skillArray,
           limit: numberOfRecs
         });
