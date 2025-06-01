@@ -35,12 +35,17 @@ def feedback():
 
 @skill_routes.route('/learn', methods=['POST'])
 def learn_route():
-    data = request.get_json()
-    skills = data.get('skills', [])
-    limit = int(data.get('limit', 3))
-    
-    print("Received skills for /learn:", skills)
-    print("Limit requested:", limit)
+    try:
+        data = request.get_json()
+        skills = data.get('skills', [])
+        limit = int(data.get('limit', 3))
 
-    response = get_learning_resources(skills, limit)
-    return jsonify(response)
+        print("Received skills for /learn:", skills)
+        print("Limit requested:", limit)
+
+        response = get_learning_resources(skills, limit)
+        return jsonify(response)
+    except Exception as e:
+        print("Error in /learn route:", e)
+        return jsonify({"error": str(e)}), 500
+

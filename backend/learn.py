@@ -39,7 +39,11 @@ def get_learning_resources(user_skills, limit=5):
         if any(skill in business_skills for skill in normalized_skills):
             bonus.append({
                 "business_idea": row.get("Business Idea", "N/A"),
-                "matched_skills": list(set(business_skills) & set(normalized_skills)),
+                "matched_skills": list(
+    set(s for s in business_skills if isinstance(s, str)) &
+    set(s for s in normalized_skills if isinstance(s, str))
+),
+
                 "initial_investment": row.get("Initial Investment (INR)", "N/A"),
                 "monthly_income": row.get("Monthly Income (INR)", "N/A")
             })

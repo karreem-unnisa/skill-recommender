@@ -1,5 +1,3 @@
-# backend/app.py
-import os
 from flask import Flask
 from flask_cors import CORS
 from routes import skill_routes
@@ -10,8 +8,12 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-app.register_blueprint(skill_routes)
+@app.route('/')
+def home():
+    return "Backend is up and running!"
+
+app.register_blueprint(skill_routes, url_prefix='/api')
+
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Use Render's port or default 5000
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(debug=True)
