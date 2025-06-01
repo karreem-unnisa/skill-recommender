@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from recommender import get_recommendations
 from learn import get_learning_resources  # Assuming you keep this
-from utils.history_saver import save_user_history
+
 
 skill_routes = Blueprint('skill_routes', __name__)
 
@@ -14,8 +14,7 @@ def recommend():
 
         recommendations = get_recommendations(skills)
 
-        # Save user history locally or however save_user_history is implemented (no DB dependency)
-        save_user_history(skills, [rec["business_idea"] for rec in recommendations], feedback)
+     
 
         return jsonify({"recommendations": recommendations})
     except Exception as e:
