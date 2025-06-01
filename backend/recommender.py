@@ -1,10 +1,12 @@
-# backend/recommender.py
+from pathlib import Path
 import pandas as pd
 import json
-from pathlib import Path
+import random
+# Get absolute path to this file's directory
+BASE_DIR = Path(__file__).resolve().parent
 
-DATASET_PATH = Path("backend/dataset/custom.xlsx")
-SYNONYM_PATH = Path("backend/dataset/synonyms.json")
+DATASET_PATH = BASE_DIR / "dataset" / "custom.xlsx"
+SYNONYM_PATH = BASE_DIR / "dataset" / "synonyms.json"
 
 # Load dataset
 df = pd.read_excel(DATASET_PATH)
@@ -12,6 +14,7 @@ df = pd.read_excel(DATASET_PATH)
 # Load synonyms
 with open(SYNONYM_PATH, "r") as f:
     synonym_map = json.load(f)
+
 
 def normalize_skill(skill):
     skill = skill.lower().strip()
@@ -25,11 +28,19 @@ def get_recommendations(user_skills):
     matches = []
 
     for _, row in df.iterrows():
-        business_skills = [normalize_skill(s.strip()) for s in row["Skills"].split(",")]
+        business_skills = [normalize_skill(s.strip()) for s in row["Skill"].split(",")]
         if any(skill in business_skills for skill in normalized):
             matches.append({
-                "business": row["Business Idea"],
+                "business_idea": row["Business Idea"],
                 "matched_skills": list(set(business_skills) & set(normalized)),
-                "location": row.get("Location", "N/A")
+                "business_type": row.get("Business Type", "N/A"),
+                "tools_needed": row.get("Tools Needed", "N/A"),
+                "initial_investment": row.get("Initial Investment (INR)", "N/A"),
+                "monthly_income": row.get("Monthly Income (INR)", "N/A"),
+                "getting_started_plan": row.get("Getting Started Plan", "N/A"),
+                "growth_plan": row.get("Growth Plan", "N/A"),
+                "tips": row.get("Tips", "N/A"),
+                "learning_resources": row.get("Learning Resources", "N/A")
             })
+
     return matches
