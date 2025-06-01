@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: skill-recommender-backend
+    env: python  # or node
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: MONGO_URI
+        value: mongodb://localhost:27017
+      - key: DB_NAME
+        value: skill_recommender
