@@ -7,16 +7,22 @@ from datetime import datetime, timezone
 skill_routes = Blueprint('skill_routes', __name__)
 
 @skill_routes.route("/recommend", methods=["POST"])
+
 def recommend():
-    data = request.get_json()
-    skills = data.get("skills", [])
-    feedback = data.get("feedback", None)
+    try:
+        data = request.get_json()
+        skills = data.get("skills", [])
+        feedback = data.get("feedback", None)
 
-    recommendations = get_recommendations(skills)
+        recommendations = get_recommendations(skills)
 
-    save_user_history(skills, [rec["business_idea"] for rec in recommendations], feedback)
+        save_user_history(skills, [rec["business_idea"] for rec in recommendations], feedback)
 
-    return jsonify({"recommendations": recommendations})
+        return jsonify({"recommendations": recommendations})
+    except Exception as e:
+        print("Error in /recommend route:", e)
+        return jsonify({"error": str(e)}), 500
+
 
 @skill_routes.route("/feedback", methods=["POST"])
 def feedback():
