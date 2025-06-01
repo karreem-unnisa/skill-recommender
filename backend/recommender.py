@@ -7,7 +7,7 @@ import random
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DATASET_PATH = os.path.join(BASE_DIR, 'dataset', 'custom.xlsx')
-SYNONYM_PATH = BASE_DIR / "dataset" / "synonyms.json"
+SYNONYM_PATH = os.path.join(BASE_DIR, 'dataset', 'synonyms.json')
 
 # Load dataset
 df = pd.read_excel(DATASET_PATH)
