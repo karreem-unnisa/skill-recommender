@@ -1,0 +1,6 @@
+{
+  "tailoring": ["sewing", "stitching", "alterations"],
+  "cooking": ["culinary", "chef", "baking", "kitchen work","catering"],
+  "craft": ["handicraft", "diy", "arts"],
+  "beauty": ["makeup", "salon", "grooming"]
+}
