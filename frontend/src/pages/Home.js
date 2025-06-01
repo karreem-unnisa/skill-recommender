@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Home.css'; // Use this for styling
+import { BASE_URL } from '../config.js';
 import headerImage from '../assets/header.jpg';
 
 const Home = () => {
