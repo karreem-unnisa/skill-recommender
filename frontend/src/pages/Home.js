@@ -41,10 +41,7 @@ const Home = () => {
           setResults(getRandomSubset(allResults, numberOfRecs));
         }
       } else if (mode === 'learn') {
-        const res = await axios.post(`${BASE_URL}/api/learn`, {
-          skills: skillArray,
-          limit: numberOfRecs
-        });
+       const res = await axios.post(`${BASE_URL}/api/learn`, { skills: skillArray, limit: numberOfRecs });
         const learnResults = res.data.recommendations || [];
         const bonusIdeas = res.data.bonus_business_ideas || [];
 

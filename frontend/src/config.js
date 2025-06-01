@@ -1,2 +1,2 @@
-const BASE_URL = "https://skill-based-business-recommendation.onrender.com"; // no trailing slash
-export default BASE_URL;
+// config.js
+export const BASE_URL = "https://skill-based-business-recommendation.onrender.com";
