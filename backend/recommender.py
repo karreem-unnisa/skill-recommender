@@ -1,11 +1,12 @@
 from pathlib import Path
 import pandas as pd
 import json
+import os
 import random
 # Get absolute path to this file's directory
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-DATASET_PATH = BASE_DIR / "dataset" / "custom.xlsx"
+DATASET_PATH = os.path.join(BASE_DIR, 'dataset', 'custom.xlsx')
 SYNONYM_PATH = BASE_DIR / "dataset" / "synonyms.json"
 
 # Load dataset
