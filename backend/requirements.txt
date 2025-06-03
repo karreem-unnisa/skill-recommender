@@ -1,9 +1,5 @@
 Flask
-flask-cors
-python-dotenv
 pandas
 openpyxl
-pymongo
-sentence-transformers
-scikit-learn
-python-multipart
+flask-cors
+python-dotenv
