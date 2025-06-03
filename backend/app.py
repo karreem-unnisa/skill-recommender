@@ -10,7 +10,6 @@ app = Flask(__name__)
 CORS(app)
 
 
-
 app.register_blueprint(skill_routes, url_prefix='/api')
 
 

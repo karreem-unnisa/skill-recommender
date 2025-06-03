@@ -1,255 +1,185 @@
-/* === Container Setup === */
+/* Container with some padding and centered content */
 .home-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 30px 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 15px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #2e3d49;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-  background-color: #fefefe;
+  color: #333;
+  background: #f9fafb; /* very light pastel background */
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(100, 150, 200, 0.1); /* soft subtle glow */
 }
 
-/* === Header Image === */
+/* Header image container and styling */
 .header-image-container {
   width: 100%;
-  height: 45vh;
   overflow: hidden;
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(150, 180, 220, 0.3);
+  margin-bottom: 20px;
 }
 
 .header-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
+  transition: transform 0.5s ease;
+  border-radius: 12px;
 }
 
-/* === Intro Section === */
-.intro-section {
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto;
+.header-image:hover {
+  transform: scale(1.05);
 }
+
+/* Intro text */
+.intro-section {
+  max-width: 600px;   /* or whatever width you want */
+  margin: 0 auto 30px auto; /* auto left and right margins center the block */
+  text-align: center;
+  color: #445566;
+}
+
+
 
 .intro-section h2 {
-  font-size: 2.6rem;
-  margin-bottom: 20px;
   font-weight: 700;
-  color: #3c4a5d;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 6px rgba(120, 160, 200, 0.3);
 }
 
 .intro-section p {
-  font-size: 1.25rem;
-  line-height: 1.7;
-  color: #5a6a7a;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 8px auto;
 }
 
 .mentorship-ask {
+  margin-top: 15px;
   font-weight: 600;
-  font-size: 1.2rem;
-  color: #8e44ad;
+  color: #5678a4;
 }
 
 .mentorship-link {
-  color: #9b59b6;
-  text-decoration: underline;
+  color: #789cdf;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
 }
 
 .mentorship-link:hover {
-  color: #884ea0;
+  color: #34567a;
+  text-decoration: underline;
 }
 
-/* === Main Content Flex === */
-.main-content {
-  display: flex;
-  flex-direction: row;      /* side by side */
-  justify-content: center;  /* center horizontally */
-  align-items: flex-start;  /* align items at top */
-  gap: 40px;                /* space between form and results */
-  width: 100%;
-  max-width: 1400px;        /* optional max width to keep it from stretching too much */
-  margin: 0 auto;           /* center the whole container horizontally */
-  padding: 0 20px;          /* some padding */
-}
-
-
-/* === Recommender Form === */
+/* Form styling */
 .recommender-form {
-       /* Use full available width */
-  max-width: 1500px;        /* Max width 800px */
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: #f7f3fa;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.15);
-  margin: 0 auto;        
-  justify-content: center;  /* Center horizontally */
-}
-
-
-.recommender-form label {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #4a4a4a;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 .recommender-form select,
-.recommender-form input[type="text"],
-.recommender-form input[type="number"] {
-  padding: 15px 20px;
-  font-size: 1.1rem;
-  border-radius: 12px;
-  border: 1.8px solid #ccc;
-  transition: border-color 0.3s ease;
-  background-color: #fff;
+.recommender-form input {
+  flex: 1 1 200px;
+  padding: 10px 15px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(150, 180, 220, 0.1);
 }
 
 .recommender-form select:focus,
 .recommender-form input:focus {
-  border-color: #9b59b6;
+  border-color: #789cdf;
+  box-shadow: 0 0 12px rgba(120, 160, 220, 0.6);
   outline: none;
 }
 
-/* === Form Button === */
 .recommender-form button {
-  padding: 16px 0;
-  background-color: #9b59b6;
+  flex: 1 1 150px;
+  background: #789cdf;
   color: white;
-  font-size: 1.2rem;
+  font-weight: 700;
   border: none;
-  border-radius: 12px;
-  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  box-shadow: 0 0 10px #789cdfaa;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .recommender-form button:hover {
-  background-color: #884ea0;
+  background: #5678a4;
+  box-shadow: 0 0 15px #5678a4cc;
 }
 
-.recommender-form button:disabled {
-  background-color: #d7bde2;
-  cursor: not-allowed;
-}
-
-/* === Results === */
+/* Results container */
 .results-container {
-         /* Full width */
-  max-width: 800px;       /* Max width same as form */
-  padding: 0 5px;
-  margin: 0 auto;         /* Center horizontally */
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.recommender-form,
-.results-container {
-  flex: 1 1 400px; /* allow to grow, shrink, base 400px width */
-  max-width: 600px; /* optional to limit max size */
+/* No match message */
+.no-match-message {
+  background-color: #f8d7da;
+  color: #842029;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 0 8px #f5c2c7;
 }
 
-
-
-
-/* === Cards === */
+/* Cards for results */
 .card {
-  background: #fcf0f8;
-  padding: 25px;
-  margin-bottom: 25px;
-  border-radius: 18px;
-  box-shadow: 0 5px 12px rgba(231, 76, 60, 0.1);
-  color: #4d3c3c;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(120, 160, 200, 0.15);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0 25px rgba(120, 160, 220, 0.35);
 }
 
 .card h4 {
-  font-size: 1.6rem;
-  color: #c0392b;
+  color: #34567a;
   margin-bottom: 12px;
+  text-shadow: 0 0 4px rgba(100, 140, 180, 0.25);
 }
 
 .card p {
-  font-size: 1.1rem;
   margin: 6px 0;
-  line-height: 1.6;
+  line-height: 1.4;
+  color: #4a5568;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-.card a {
-  color: #9b59b6;
-  text-decoration: underline;
-}
-
-.card a:hover {
-  color: #884ea0;
-}
-
-/* === No Match === */
-.no-match-message {
-  color: #e74c3c;
-  font-weight: 600;
-  font-size: 1.2rem;
-  margin-top: 10px;
-}
-
-/* === Responsive Adjustments === */
-@media (max-width: 1024px) {
-  .main-content {
-    gap: 40px;
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .recommender-form {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .recommender-form,
-  .results-container {
-    max-width: 100%;
-    padding: 0 10px;
-  }
-}
-
-@media (max-width: 600px) {
-  .home-container {
-    padding: 20px 15px;
-  }
-
-  .intro-section h2 {
-    font-size: 2rem;
-  }
-
-  .intro-section p,
-  .mentorship-ask {
-    font-size: 1rem;
-  }
-
+  .recommender-form select,
   .recommender-form input,
-  .recommender-form select {
-    font-size: 1rem;
-    padding: 14px 18px;
-  }
-
   .recommender-form button {
-    font-size: 1.1rem;
-    padding: 14px 0;
+    flex: none;
+    width: 100%;
   }
 
-  .card h4 {
-    font-size: 1.3rem;
-  }
-
-  .card p {
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .main-content {
-    flex-direction: column; /* stack vertically on narrow screens */
-    align-items: center;
-    gap: 30px;
-  }
-
-  .recommender-form,
-  .results-container {
-    max-width: 100%;
+  .home-container {
+    padding: 10px;
   }
 }

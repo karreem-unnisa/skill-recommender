@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Home.css'; // Use this for styling
 import { BASE_URL } from '../config.js';
-import headerImage from '../assets/header.jpg';
+import headerImage from '../assets/home.png';
 
 const Home = () => {
   const [skills, setSkills] = useState('');
@@ -83,7 +83,7 @@ const Home = () => {
       </section>
 
       {/* Main content: form + results side by side */}
-      <section className="main-content">
+      
         <form className="recommender-form" onSubmit={handleSubmit}>
           <select value={mode} onChange={(e) => setMode(e.target.value)} aria-label="Select recommendation mode">
             <option value="recommend">Business Idea</option>
@@ -175,7 +175,7 @@ const Home = () => {
             </>
           )}
         </div>
-      </section>
+  
     </div>
   );
 };

@@ -1,6 +1,9 @@
 Flask
-pandas
-openpyxl
 flask-cors
 python-dotenv
+pandas
+openpyxl
 pymongo
+sentence-transformers
+scikit-learn
+python-multipart
