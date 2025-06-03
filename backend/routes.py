@@ -1,11 +1,12 @@
 from flask import Blueprint, request, jsonify
 from recommender import get_recommendations
-from learn import get_learning_resources  # Assuming you keep this
-
+from learn import get_learning_resources
+from flask_cors import cross_origin  # ✅ Add this
 
 skill_routes = Blueprint('skill_routes', __name__)
 
 @skill_routes.route("/recommend", methods=["POST"])
+@cross_origin()  # ✅ Fixes the CORS issue
 def recommend():
     try:
         data = request.get_json()
@@ -13,9 +14,6 @@ def recommend():
         feedback = data.get("feedback", None)
 
         recommendations = get_recommendations(skills)
-
-     
-
         return jsonify({"recommendations": recommendations})
     except Exception as e:
         print("Error in /recommend route:", e)
@@ -23,13 +21,13 @@ def recommend():
 
 
 @skill_routes.route("/feedback", methods=["POST"])
+@cross_origin()  # ✅ Optional: Only if you plan to use this
 def feedback():
-    # Since no MongoDB, either remove or implement feedback saving locally
-    # Here's a placeholder response for now:
     return jsonify({"message": "Feedback saving not implemented without DB."}), 501
 
 
 @skill_routes.route('/learn', methods=['POST'])
+@cross_origin()  # ✅ Optional, but keeps behavior consistent
 def learn_route():
     try:
         data = request.get_json()
