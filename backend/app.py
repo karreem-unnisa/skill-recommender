@@ -7,13 +7,11 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
 
+# Explicitly allow your Vercel frontend domain
+CORS(app, resources={r"/api/*": {"origins": "https://skill-based-business-recommendation.vercel.app"}})
 
 app.register_blueprint(skill_routes, url_prefix='/api')
-
-
-import os
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
