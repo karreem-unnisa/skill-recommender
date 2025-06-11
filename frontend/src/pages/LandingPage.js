@@ -1,58 +1,68 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
-import landingImage from '../assets/image.png'; 
-import { ReactComponent as HowIllustration } from '../assets/how-illustration.svg';
-import { ReactComponent as WhyIllustration } from '../assets/why-illustration.svg';
-import FloatingPinkShape from '../components/FloatingPinkShape';
-import FloatingPurpleShape from '../components/FloatingPurpleShape';
 
 const LandingPage = () => {
   const navigate = useNavigate();
 
-  const handleGetStarted = () => {
-    navigate('/home');  // Redirect to your Home.js route
-  };
-
   return (
-    <div className="landing-container">
-      <div className="left-half" style={{ position: 'relative' }}>
-        {/* Floating decorative shapes */}
-        <FloatingPinkShape className="floating-shape pink" />
-        <FloatingPurpleShape className="floating-shape purple" />
+    <div className="landing-page">
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="logo">🌸 SkillBridge</div>
+       
+      </nav>
 
-        <header className="landing-header" data-aos="fade-up">
-          <h1>Empower Your Skills</h1>
-          <p className="tagline">
-            Transform your abilities into opportunities. Discover personalized business ideas and learning paths tailored just for you.
-          </p>
-          <button onClick={handleGetStarted} className="btn-get-started">
-            Get Started
-          </button>
-        </header>
+      {/* Hero */}
+      <section className="hero">
+        <p className="badge">🌟 Empowering Women Entrepreneurs</p>
+        <h1>
+          Transform Your Skills Into <span className="highlight">Financial Freedom</span>
+        </h1>
+        <p className="subtext">
+          Discover personalized business opportunities or learning paths tailored to your unique skills.
+          Our AI-powered platform helps homemakers build successful businesses and achieve financial independence.
+        </p>
+        <div className="cta-buttons">
+          <button onClick={() => navigate('/home')} className="btn primary">Get Started Free →</button>
+         
+        </div>
+        <div className="trust-stats">
+          <span>👩‍🦰 10,000+ Women Empowered</span>
+          <span>✅ 95% Success Rate</span>
+          <span>📈 ₹50L+ Revenue Generated</span>
+        </div>
+      </section>
 
-        <section className="how-it-works" data-aos="fade-up" data-aos-delay="100">
-          <h2>How It Works</h2>
-          <HowIllustration className="decor-illustration" />
-          <ul>
-            <li><strong>1.</strong> Select your skills or interests</li>
-            <li><strong>2.</strong> Get personalized business ideas and learning resources</li>
-            <li><strong>3.</strong> Plan your journey and start growing</li>
-          </ul>
-        </section>
+      {/* How It Works */}
+      <section className="how-section">
+        <h2>How SkillBridge Works</h2>
+        <p className="section-sub">Our intelligent platform analyzes your skills and preferences to provide personalized recommendations</p>
+        <div className="cards">
+          <div className="card">
+            <div className="icon">🔍</div>
+            <h3>Skill Assessment</h3>
+            <p>Tell us about your existing skills, interests, and goals. Our system evaluates your strengths and potential.</p>
+          </div>
+          <div className="card">
+            <div className="icon">🧠</div>
+            <h3>AI Recommendations</h3>
+            <p>Get personalized business ideas or learning paths powered by machine learning and market analysis.</p>
+          </div>
+          <div className="card">
+            <div className="icon">🚀</div>
+            <h3>Take Action</h3>
+            <p>Follow detailed guides and step-by-step plans to launch your business or begin your learning journey.</p>
+          </div>
+        </div>
+      </section>
 
-        <section className="why-us" data-aos="fade-up" data-aos-delay="200">
-          <h2>Why Choose Us?</h2>
-          <WhyIllustration className="decor-illustration" />
-          <p>
-            We focus on women empowerment by providing a unique, skill-based recommendation system with curated resources and actionable business ideas.
-          </p>
-        </section>
-      </div>
-
-      <div className="right-half">
-        <img src={landingImage} alt="Empower Your Skills" />
-      </div>
+      {/* Gradient CTA */}
+      <footer className="cta-footer">
+        <h2>Ready to Start Your Journey?</h2>
+        <p>Join thousands of women who have transformed their lives through SkillBridge</p>
+        <button className="btn light" onClick={() => navigate('/home')}>Start Your Assessment →</button>
+      </footer>
     </div>
   );
 };

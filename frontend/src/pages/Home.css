@@ -145,7 +145,11 @@
   padding: 20px;
   margin-bottom: 20px;
   transition: box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+   text-align: left; /* ✅ Force left alignment */
 }
+
 
 .card:hover {
   box-shadow: 0 0 25px rgba(120, 160, 220, 0.35);
