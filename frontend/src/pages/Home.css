@@ -138,7 +138,7 @@
 }
 
 /* Cards for results */
-.card {
+.cardHome {
   background: white;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(120, 160, 200, 0.15);
@@ -147,21 +147,20 @@
   transition: box-shadow 0.3s ease;
   width: 100%;
   box-sizing: border-box;
-   text-align: left; /* ✅ Force left alignment */
 }
 
 
-.card:hover {
+.cardHome:hover {
   box-shadow: 0 0 25px rgba(120, 160, 220, 0.35);
 }
 
-.card h4 {
+.cardHome h4 {
   color: #34567a;
   margin-bottom: 12px;
   text-shadow: 0 0 4px rgba(100, 140, 180, 0.25);
 }
 
-.card p {
+.cardHome p {
   margin: 6px 0;
   line-height: 1.4;
   color: #4a5568;

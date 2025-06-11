@@ -124,7 +124,7 @@ const Home = () => {
             <>
               <h3>Business Recommendations:</h3>
               {results.map((rec, idx) => (
-                <div key={idx} className="card">
+                <div key={idx} className="cardHome">
                   <h4>{rec.business_idea}</h4>
                   <p><strong>Matched Skills:</strong> {Array.isArray(rec.matched_skills) ? rec.matched_skills.join(', ') : 'N/A'}</p>
                   <p><strong>Business Type:</strong> {rec.business_type}</p>
@@ -145,7 +145,7 @@ const Home = () => {
             <>
               <h3>Learning Resources:</h3>
               {results.map((rec, idx) => (
-                <div key={idx} className="card">
+                <div key={idx} className="cardHome">
                   <h4>{rec.resource_name}</h4>
                   <p><strong>Platform:</strong> {rec.platform}</p>
                   <p><strong>Skill:</strong> {rec.skill_name}</p>
@@ -161,7 +161,7 @@ const Home = () => {
                 <>
                   <h3>Business you can start After Learning:</h3>
                   {bonus.map((b, i) => (
-                    <div key={i} className="card">
+                    <div key={i} className="cardHome">
                       <h4>{b.business_idea}</h4>
                       <p><strong>Matched Skills:</strong> {Array.isArray(b.matched_skills) ? b.matched_skills.join(', ') : 'N/A'}</p>
                       <p><strong>Monthly Income:</strong> ₹{b.monthly_income}</p>
