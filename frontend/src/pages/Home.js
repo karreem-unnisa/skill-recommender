@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Home.css'; // Use this for styling
-import { BASE_URL } from '../config.js';
-import headerImage from '../assets/home.png';
+import './Home.css';
+import { BASE_URL } from '../config';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
+  const [step, setStep] = useState(1);
   const [skills, setSkills] = useState('');
-  const [numberOfRecs, setNumberOfRecs] = useState(3);
   const [mode, setMode] = useState('recommend');
+  const [numberOfRecs, setNumberOfRecs] = useState(5);
   const [results, setResults] = useState([]);
   const [bonus, setBonus] = useState([]);
+ 
   const [noMatch, setNoMatch] = useState(false);
 
   const getRandomSubset = (array, n) => {
@@ -18,164 +21,167 @@ const Home = () => {
     return shuffled.slice(0, n);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setNoMatch(false);
-    setResults([]);
-    setBonus([]);
-
-    const skillArray = skills.split(',').map(s => s.trim()).filter(s => s.length > 0);
-
+  const handleRecommendation = async () => {
+    const skillArray = skills.split(',').map(s => s.trim()).filter(Boolean);
     if (skillArray.length === 0) {
       setNoMatch(true);
       return;
     }
 
+   
+    setNoMatch(false);
+    setResults([]);
+    setBonus([]);
+
     try {
       if (mode === 'recommend') {
         const res = await axios.post(`${BASE_URL}/api/recommend`, { skills: skillArray });
         const allResults = res.data.recommendations || [];
-        if (allResults.length === 0) {
-          setNoMatch(true);
-        } else {
-          setResults(getRandomSubset(allResults, numberOfRecs));
-        }
-      } else if (mode === 'learn') {
-       const res = await axios.post(`${BASE_URL}/api/learn`, { skills: skillArray, limit: numberOfRecs });
+        if (allResults.length === 0) setNoMatch(true);
+        else setResults(getRandomSubset(allResults, numberOfRecs));
+      } else {
+        const res = await axios.post(`${BASE_URL}/api/learn`, { skills: skillArray, limit: numberOfRecs });
         const learnResults = res.data.recommendations || [];
         const bonusIdeas = res.data.bonus_business_ideas || [];
-
-        if (learnResults.length === 0) {
-          setNoMatch(true);
-        } else {
+        if (learnResults.length === 0) setNoMatch(true);
+        else {
           setResults(learnResults);
           setBonus(bonusIdeas);
         }
       }
     } catch (err) {
-      console.error('Error fetching data:', err);
+      console.error('Error:', err);
       setNoMatch(true);
     }
+
+    setStep(4);
   };
 
   return (
     <div className="home-container">
-      {/* Full-width header image */}
-      <div className="header-image-container">
-        <img
-           src={headerImage}
-          alt="Inspiring business women"
-          className="header-image"
-        />
-      </div>
+      <nav className="navbar">
+  <Link to="/" className="logo">🌸 SkillBridge</Link>
+</nav>
 
-      {/* Intro text and mentorship offer */}
-      <section className="intro-section">
-        <h2>How Our Recommendation System Helps You</h2>
-        <p>
-          Discover business ideas or learning resources tailored just for your unique skill set.
-          Get inspired and empowered to start your journey with actionable recommendations.
-        </p>
-        <p className="mentorship-ask">
-          Need mentorship to kick-start your business?{' '}
-          <a href="/contact" className="mentorship-link">Reach out to us!</a>
-        </p>
-      </section>
+      <div className="step-indicator">Step {step} of 4</div>
 
-      {/* Main content: form + results side by side */}
-      
-        <form className="recommender-form" onSubmit={handleSubmit}>
-          <select value={mode} onChange={(e) => setMode(e.target.value)} aria-label="Select recommendation mode">
-            <option value="recommend">Business Idea</option>
-            <option value="learn">Learning Resources</option>
-          </select>
-
+      {/* Step 1 */}
+      {step === 1 && (
+        <section className="step-section">
+          <h2>✨ Let's Start with Your Skills</h2>
           <input
             type="text"
-            placeholder="Enter skills (e.g., stitching, baking)"
+            placeholder="e.g., cooking, teaching, gardening"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
-            required
-            aria-label="Input skills separated by comma"
           />
+          <button onClick={() => setStep(2)}>Next →</button>
+        </section>
+      )}
 
-          <input
-            type="number"
-            min="1"
-            placeholder="Number of Results"
-            value={numberOfRecs}
-            onChange={(e) => setNumberOfRecs(Number(e.target.value))}
-            required
-            aria-label="Number of results to display"
-          />
+      {/* Step 2 */}
+      {step === 2 && (
+        <section className="step-section">
+          <h2>🛤️ What Would You Like to Explore?</h2>
+          <div className="option-cards">
+            <div className={`option-card ${mode === 'recommend' ? 'active' : ''}`} onClick={() => setMode('recommend')}>
+              <h3>💡 Business Ideas</h3>
+              <p>Get startup ideas matched to your skills</p>
+            </div>
+            <div className={`option-card ${mode === 'learn' ? 'active' : ''}`} onClick={() => setMode('learn')}>
+              <h3>📚 Learning Paths</h3>
+              <p>Learn new skills with earning potential</p>
+            </div>
+          </div>
 
-          <button type="submit">Get Results</button>
-        </form>
+          <label>🔢 How many recommendations?</label>
+          <div className="rec-counts">
+            {[3, 5, 7, 10].map(n => (
+              <button key={n} className={numberOfRecs === n ? 'selected' : ''} onClick={() => setNumberOfRecs(n)}>
+                {n}
+              </button>
+            ))}
+          </div>
 
-        <div className="results-container">
-          {noMatch && (
-            <div className="no-match-message">
-              No matches found. Please check for typos or try alternate terms.
+          <button onClick={() => { setStep(3); handleRecommendation(); }}>
+            🚀 Get My Recommendations
+          </button>
+        </section>
+      )}
+
+      {/* Step 3 */}
+      {step === 3 && (
+        <section className="step-section loading">
+          <h2>🧠 Analyzing your skills...</h2>
+          <p>AI is generating the best paths for you. Hang tight!</p>
+          <div className="spinner"></div>
+        </section>
+      )}
+
+      {/* Step 4 */}
+      {step === 4 && (
+        <section className="results-section">
+          {noMatch ? (
+            <div className="no-match">❌ No matches found. Try again.</div>
+          ) : (
+            <>
+              <h2>{mode === 'recommend' ? '🚀 Business Ideas for You' : '📚 Learn & Grow'}</h2>
+              <div className="result-blocks">
+                {results.map((rec, idx) => (
+                  <div className="result-wrapper" key={idx}>
+                    <div className="result-title-card">
+                      {mode === 'recommend' ? `💡 ${rec.business_idea}` : `📘 ${rec.resource_name}`}
+                    </div>
+                    <div className="feature-grid">
+                      {mode === 'recommend' ? (
+                        <>
+                          <div className="feature-card">📂 <strong>Type:</strong> {rec.business_type}</div>
+                          <div className="feature-card">🎯 <strong>Skills:</strong> {rec.matched_skills?.join(', ')}</div>
+                          <div className="feature-card">🛠️ <strong>Tools:</strong> {rec.tools_needed}</div>
+                          <div className="feature-card">💸 <strong>Investment:</strong> ₹{rec.initial_investment}</div>
+                          <div className="feature-card">📈 <strong>Monthly Income:</strong> ₹{rec.monthly_income}</div>
+                          <div className="feature-card">🚀 <strong>Getting Started:</strong> {rec.getting_started_plan}</div>
+                          <div className="feature-card">🌱 <strong>Growth Plan:</strong> {rec.growth_plan}</div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="feature-card">🖥️ <strong>Platform:</strong> {rec.platform}</div>
+                          <div className="feature-card">🎯 <strong>Skill:</strong> {rec.skill_name}</div>
+                          <div className="feature-card">📊 <strong>Difficulty:</strong> {rec.skill_level}</div>
+                          <div className="feature-card">💰 <strong>Cost:</strong> ₹{rec.cost}</div>
+                          <div className="feature-card">⏳ <strong>Duration:</strong> {rec.duration}</div>
+                          <div className="feature-card">📈 <strong>Income Potential:</strong> {rec.earning_potential_after_learning}</div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Bonus */}
+          {mode === 'learn' && bonus.length > 0 && (
+            <div className="bonus-section">
+              <h3>✨ Bonus Business Ideas</h3>
+              <div className="result-blocks">
+                {bonus.map((b, i) => (
+                  <div className="result-wrapper" key={i}>
+                    <div className="result-title-card">🌟 {b.business_idea}</div>
+                    <div className="feature-grid">
+                      <div className="feature-card">🎯 <strong>Skills:</strong> {b.matched_skills?.join(', ')}</div>
+                      <div className="feature-card">💸 <strong>Income:</strong> ₹{b.monthly_income}</div>
+                      <div className="feature-card">🪙 <strong>Investment:</strong> ₹{b.initial_investment}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
-          {/* Business Recommendations */}
-          {mode === 'recommend' && results.length > 0 && (
-            <>
-              <h3>Business Recommendations:</h3>
-              {results.map((rec, idx) => (
-                <div key={idx} className="cardHome">
-                  <h4>{rec.business_idea}</h4>
-                  <p><strong>Matched Skills:</strong> {Array.isArray(rec.matched_skills) ? rec.matched_skills.join(', ') : 'N/A'}</p>
-                  <p><strong>Business Type:</strong> {rec.business_type}</p>
-                  <p><strong>Tools Needed:</strong> {rec.tools_needed}</p>
-                  <p><strong>Initial Investment:</strong> ₹{rec.initial_investment}</p>
-                  <p><strong>Monthly Income:</strong> ₹{rec.monthly_income}</p>
-                  <p><strong>Getting Started Plan:</strong> {rec.getting_started_plan}</p>
-                  <p><strong>Growth Plan:</strong> {rec.growth_plan}</p>
-                  <p><strong>Tips:</strong> {rec.tips}</p>
-                  <p><strong>Learning Resources:</strong> {rec.learning_resources}</p>
-                </div>
-              ))}
-            </>
-          )}
-
-          {/* Learning Resources */}
-          {mode === 'learn' && results.length > 0 && (
-            <>
-              <h3>Learning Resources:</h3>
-              {results.map((rec, idx) => (
-                <div key={idx} className="cardHome">
-                  <h4>{rec.resource_name}</h4>
-                  <p><strong>Platform:</strong> {rec.platform}</p>
-                  <p><strong>Skill:</strong> {rec.skill_name}</p>
-                  <p><strong>Difficulty:</strong> {rec.skill_level}</p>
-                  <p><strong>Type:</strong> {rec.resource_type}</p>
-                  <p><strong>Cost:</strong> {rec.cost}</p>
-                  <p><strong>Duration:</strong> {rec.duration}</p>
-                  <p><strong>Earning Potential After Learning:</strong> {rec.earning_potential_after_learning}</p>
-                </div>
-              ))}
-
-              {bonus.length > 0 && (
-                <>
-                  <h3>Business you can start After Learning:</h3>
-                  {bonus.map((b, i) => (
-                    <div key={i} className="cardHome">
-                      <h4>{b.business_idea}</h4>
-                      <p><strong>Matched Skills:</strong> {Array.isArray(b.matched_skills) ? b.matched_skills.join(', ') : 'N/A'}</p>
-                      <p><strong>Monthly Income:</strong> ₹{b.monthly_income}</p>
-                      <p><strong>Initial Investment:</strong> ₹{b.initial_investment}</p>
-                      <p><strong>And Many More...</strong></p>
-                      <p>You also get business ideas by choosing "Business Idea" from the dropdown above.</p>
-                    </div>
-                  ))}
-                </>
-              )}
-            </>
-          )}
-        </div>
-  
+          <button className="start-over-btn" onClick={() => window.location.reload()}>🔁 Start Over</button>
+        </section>
+      )}
     </div>
   );
 };
